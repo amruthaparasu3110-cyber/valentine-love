@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>💖 Valentine for Jeevan Reddy 💖</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(#ffe6f0,#ffccd9);
+  font-family:Georgia,serif;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* Title */
+h1{
+  color:#ff0066;
+  text-shadow:0 0 15px #ff99cc,0 0 25px #ff66aa;
+}
+
+/* Button */
+button{
+  padding:15px 30px;
+  font-size:18px;
+  background:#ff6699;
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+}
+button:hover{ background:#ff3366; }
+
+/* Envelope */
+#envelope{
+  display:none;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:130px;
+  height:90px;
+}
+.body{
+  width:130px;
+  height:90px;
+  background:#ff77aa;
+  border-radius:8px;
+  position:absolute;
+}
+.flap{
+  width:130px;
+  height:70px;
+  background:#ff4477;
+  position:absolute;
+  top:-70px;
+  transform-origin:bottom;
+  transition:transform 1.2s ease;
+}
+.open .flap{ transform:rotateX(-180deg); }
+
+/* Letter paper */
+#letterBox{
+  display:none;
+  position:absolute;
+  width:80%;
+  max-width:700px;
+  padding:40px;
+  border-radius:30px;
+  box-shadow:0 0 40px rgba(255,0,102,0.4);
+  background:
+    linear-gradient(#fffafc,#ffe6f0),
+    repeating-linear-gradient(
+      #f8d7e3 0px,
+      #f8d7e3 1px,
+      transparent 1px,
+      transparent 28px
+    );
+}
+
+/* Handwriting */
+.handwritten{
+  font-family:"Segoe Script","Comic Sans MS",cursive;
+  color:#800040;
+  font-size:1.4em;
+  line-height:2em;
+  white-space:pre-wrap;
+  letter-spacing:1px;
+}
+
+/* Signature */
+#signature{
+  opacity:0;
+  margin-top:25px;
+  font-family:"Segoe Script",cursive;
+  font-size:1.6em;
+  color:#b30059;
+  transition:opacity 1.5s ease;
+}
+
+/* Falling roses & hearts */
+.fall{
+  position:absolute;
+  top:-50px;
+  animation:fall linear forwards;
+  pointer-events:none;
+}
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<h1>💖 Happy Valentine’s Day, Jeevan Reddy 💖</h1>
+<button id="btn" onclick="startMagic()">Open Your Love Letter 💌</button>
+
+<div id="envelope">
+  <div class="body"></div>
+  <div class="flap"></div>
+</div>
+
+<div id="letterBox">
+  <div class="handwritten" id="text"></div>
+  <div id="signature">— Yours, Amrutha forever 💕</div>
+</div>
+
+<script>
+const message =
+`My Dearest Jeevan Reddy,
+
+Every time I think of you,
+my heart smiles quietly.
+
+You are the warmth in my days,
+the calm in my nights,
+and the love I choose every moment.
+
+I promise to hold you close,
+to stand by you always,
+and to love you endlessly.
+
+With all my love,`;
+
+let i = 0;
+
+function startMagic(){
+  document.getElementById("btn").style.display="none";
+  const env = document.getElementById("envelope");
+  env.style.display="block";
+
+  setTimeout(()=>{
+    env.classList.add("open");
+    startRain();
+  },600);
+
+  setTimeout(()=>{
+    env.style.display="none";
+    document.getElementById("letterBox").style.display="block";
+    typeWriter();
+  },2500);
+}
+
+/* Handwriting typing */
+function typeWriter(){
+  if(i < message.length){
+    document.getElementById("text").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeWriter,80); // handwriting speed
+  } else {
+    setTimeout(()=>{
+      document.getElementById("signature").style.opacity = 1;
+    },800);
+  }
+}
+
+/* Falling roses & hearts */
+function startRain(){
+  setInterval(()=>drop("🌹"),350);
+  setInterval(()=>drop("❤️"),500);
+}
+function drop(sym){
+  const d = document.createElement("div");
+  d.className="fall";
+  d.innerHTML=sym;
+  d.style.left=Math.random()*100+"vw";
+  d.style.fontSize=(Math.random()*24+18)+"px";
+  d.style.animationDuration=(Math.random()*4+4)+"s";
+  document.body.appendChild(d);
+  setTimeout(()=>d.remove(),9000);
+}
+</script>
+
+</body>
+</html>
